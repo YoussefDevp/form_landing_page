@@ -1,15 +1,8 @@
 
-import { createServer } from 'node:http';
-import fs from 'node:fs';
-import querystring from 'querystring';
-import * as path from 'path';
-
-
-
-
-
-
-
+const { createServer } = require('node:http');
+const fs = require('node:fs');
+const querystring = require('querystring');
+const path = require('path');
 
 
 const server = createServer((req, res) => {
@@ -27,6 +20,8 @@ else if (url === "/thanks") {
 
 else if (url === "/formulario")  {
     fileName = "formulario.html";
+} else {
+    fileName = "404.html";
 }
     
 
@@ -36,7 +31,7 @@ if (req.method=='POST' && req.url == '/formulario') {
     let body =""
     req.on('data', chunk => {
 
-        body += chunk.toString(); // Collect chunks
+        body += chunk.toString(); 
     });
 
     req.on('end', () => {
@@ -76,7 +71,7 @@ if (req.method=='POST' && req.url == '/formulario') {
 fs.readFile(fileName, "utf-8", (err, data) => {
     if (err) {
         res.statusCode = 404;
-        res.write("Archivo no exiete");
+        res.writeHead(404, { 'Location': '/404' });
         res.end();
     }
     else {
