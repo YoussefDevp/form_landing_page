@@ -5,10 +5,25 @@ const querystring = require('querystring');
 const path = require('path');
 
 
+
 const server = createServer((req, res) => {
+ 
 
 var url = req.url;
 var fileName = "";
+
+if (url === '/style.css') {
+    const cssPath = path.join(__dirname, 'style.css');
+    fs.readFile(cssPath, (err, data) => {
+        if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('CSS file not found');
+            return;
+        }
+        res.writeHead(200, { 'Content-Type': 'text/css' });
+        res.end(data);
+    } );
+}
 
 if (url === "/") {
     fileName = "index.html";
@@ -51,7 +66,7 @@ if (req.method=='POST' && req.url == '/formulario') {
 
         const data = `Name: ${nombre}, LastName : ${apellido}, Email: ${email},Phone: ${phone}, experiencia: ${experiencia}, Puesto: ${puesto} \n`;
 
-        fs.appendFile(path.join('', 'data.txt'), data, (err) => {
+        fs.appendFile(path.join(__dirname, 'data.txt'), data, (err) => {
             if (err) {
                 console.error(err);
                 res.writeHead(500, { 'Content-Type': 'text/plain' });

@@ -8,6 +8,21 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.error {
+    border-radius: 15px;
+    border: 1px solid black;
+    padding: 2rem;
+    text-align: center;
+h1 {
+    font-size: 250%;
+    margin: 2rem 0;
+}
+
+p {
+    width: 600px;
+}
+}
+
 .container {
     display: flex;
     align-items: center;
